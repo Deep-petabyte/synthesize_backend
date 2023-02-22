@@ -1,6 +1,5 @@
 const express = require("express")
 const mongoose = require("mongoose")
-const MusicModel = require('./music_model')
 const app = express()
 const PORT = 5000
 
@@ -54,25 +53,16 @@ mongoose.connect(MONGODB_URI).then(()=> console.log("connected")).catch(error=>c
 //     });
 //   }
 // });
+app.use(express.json())
+app.use(require("./routes/music_routes"))
+app.use(require("./routes/user_route"))
 
 
 app.get('/', (req, res)=>{
   res.send("Welcome")
 })
 
-app.get('/musics/:page', async (req, res) =>{
-  
-  let page = parseInt(req.params.page)
-  // page should be a value like 1, 2, 3, 4
-  let limit = 25
 
-  let skip = (page - 1) * 25
-  // get previous page offset
-
-  const data = await MusicModel.find().skip(skip).limit(limit)
-  console.log(data.length)
-  res.status(200).json({data: data})
-})
 
 
 
