@@ -35,12 +35,12 @@ module.exports.getMusic = async (req, res) =>{
     await UserRequestModel.create({_id: currentUser._id})
 
     // User cannot request for a music already requested in the last 30 mins
-    const recent_music_request = await RecentMusicRequestModel.findOne({_id: currentUser._id, musicId: musicId})
+    const recent_music_request = await RecentMusicRequestModel.findOne({musicId: musicId, userId: currentUser._id})
 
     if(recent_music_request){
         return res.status(429).json({error: "Cannot request for a music already requested in the last 30 mins"})
     }
-    await RecentMusicRequestModel.create({_id: currentUser._id, musicId: musicId})
+    await RecentMusicRequestModel.create({musicId: musicId, userId: currentUser._id})
 
     // Push the music Id to the recent_music array
     currentUser.recent_musics.push(musicId)

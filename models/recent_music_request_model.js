@@ -3,11 +3,11 @@ const { ObjectId } = mongoose.Schema.Types
 
 
 const recentMusicRequestSchema = new mongoose.Schema({
-    _id: {
+    musicId: {
         type: ObjectId,
         required: true,
     },
-    musicId: {
+    userId: {
         type: String,
         required: true,
     }

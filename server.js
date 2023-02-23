@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
 const PORT = 5000
-
+const cors = require("cors")  
 // var request = require('request'); // "Request" library
 
 // var client_id = ''; // Your client id
@@ -53,6 +53,7 @@ mongoose.connect(MONGODB_URI).then(()=> console.log("connected")).catch(error=>c
 //     });
 //   }
 // });
+app.use(cors())
 app.use(express.json())
 app.use(require("./routes/music_routes"))
 app.use(require("./routes/user_route"))

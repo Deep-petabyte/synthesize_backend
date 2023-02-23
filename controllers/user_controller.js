@@ -9,8 +9,8 @@ module.exports.fetchUser = async (req, res) =>{
     const user = await UserModel.findOne({_id:userId})
     if(!user){
         const newUser = await UserModel.create({})
-        res.status(201).json({newUserId: newUser._id})
+        res.status(201).json({userId: newUser._id})
     }else{
-        res.status(201).json({oldUserId: userId})
+        res.status(201).json({userId: userId})
     }
 }
