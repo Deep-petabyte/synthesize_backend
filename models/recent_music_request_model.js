@@ -14,7 +14,7 @@ const recentMusicRequestSchema = new mongoose.Schema({
     ,
     createdAt:{
         type: Date,
-        expires: '1800s',
+        expires: '30m',
         default: Date.now
     }
 })

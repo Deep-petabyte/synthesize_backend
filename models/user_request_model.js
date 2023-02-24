@@ -9,7 +9,7 @@ const userRequestSchema = new mongoose.Schema({
     },
     createdAt:{
         type: Date,
-        expires: '300s',
+        expires: '5m',
         default: Date.now
     }
 })

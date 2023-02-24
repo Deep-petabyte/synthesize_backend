@@ -1,8 +1,11 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
+const socketio = require('socket.io')
+const http = require('http').createServer(app)
 const PORT = 5000
 const cors = require("cors")  
+const MusicModel = require("./models/music_model")
 // var request = require('request'); // "Request" library
 
 // var client_id = ''; // Your client id
@@ -53,19 +56,29 @@ mongoose.connect(MONGODB_URI).then(()=> console.log("connected")).catch(error=>c
 //     });
 //   }
 // });
-app.use(cors())
+const corsOption = {
+  origin: 'http://localhost:5173'
+}
+app.use(cors(corsOption))
 app.use(express.json())
+const io = socketio(http, {cors: corsOption})
+
 app.use(require("./routes/music_routes"))
 app.use(require("./routes/user_route"))
 
+io.on('connection', (socket) =>{
+  console.log(socket.id)
 
-app.get('/', (req, res)=>{
+  socket.on('musicId-to-dj', musicId =>{
+    MusicModel.findOne({_id: musicId})
+    .then(result =>{
+      io.emit('requested-musicId', result)
+    })
+  })
+})
+
+app.get('/', (req, res) =>{
   res.send("Welcome")
 })
 
-
-
-
-
-
-app.listen(PORT, ()=> console.log(`Server is running on http://localhost:${PORT}`))
+http.listen(PORT, ()=> console.log(`Server is running on http://localhost:${PORT}`))
