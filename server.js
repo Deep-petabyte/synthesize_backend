@@ -1,6 +1,8 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
+const dotenv = require("dotenv")
+dotenv.config()
 const socketio = require('socket.io')
 const http = require('http').createServer(app)
 const PORT = 5000
@@ -11,9 +13,8 @@ const MusicModel = require("./models/music_model")
 // var client_id = ''; // Your client id
 // var client_secret = ''; // Your secret
 
-const MONGODB_URI = 'mongodb+srv://kiisifelix:kiisifelix2006@petabyte-music.mcjqbdm.mongodb.net/?retryWrites=true&w=majority'
 
-mongoose.connect(MONGODB_URI).then(()=> console.log("connected")).catch(error=>console.log(error))
+mongoose.connect(process.env.MONGODB_URI).then(()=> console.log("connected")).catch(error=>console.log(error))
 
 // your application requests authorization
 // var authOptions = {
