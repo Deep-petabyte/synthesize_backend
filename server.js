@@ -58,7 +58,7 @@ mongoose.connect(process.env.MONGODB_URI).then(()=> console.log("connected")).ca
 //   }
 // });
 const corsOption = {
-  origin: 'http://localhost:5173'
+  origin: 'https://synthesizedj.netlify.app'
 }
 app.use(cors(corsOption))
 app.use(express.json())
